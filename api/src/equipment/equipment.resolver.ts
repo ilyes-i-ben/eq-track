@@ -1,7 +1,8 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Int } from '@nestjs/graphql';
 import { EquipmentService } from './equipment.service';
 import { Equipment } from './entities/equipment.entity';
 import { CreateEquipmentInput } from './dto/create-equipment.input';
+import { DeleteEquipmentResponse } from './dto/delete-equipment.response';
 
 @Resolver(() => Equipment)
 export class EquipmentResolver {
@@ -17,5 +18,14 @@ export class EquipmentResolver {
     @Args('createEquipmentInput') createEquipmentInput: CreateEquipmentInput,
   ) {
     return await this.equipmentService.create(createEquipmentInput);
+  }
+
+  @Mutation(() => DeleteEquipmentResponse)
+  async removeEquipment(@Args('id', { type: () => Int }) id: number) {
+    await this.equipmentService.delete(id);
+    return {
+      success: true,
+      message: 'Equipment deleted successfully',
+    };
   }
 }

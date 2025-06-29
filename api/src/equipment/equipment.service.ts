@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEquipmentInput } from './dto/create-equipment.input';
 
@@ -11,8 +11,22 @@ export class EquipmentService {
   }
 
   async create(createEquipmentInput: CreateEquipmentInput) {
-    return this.prisma.equipment.create({
+    return await this.prisma.equipment.create({
       data: createEquipmentInput,
     });
+  }
+
+  async delete(equipmentId: number) {
+    try {
+      return await this.prisma.equipment.delete({
+        where: {
+          id: equipmentId,
+        },
+      });
+    } catch {
+      throw new NotFoundException(
+        `Equipment with id : ${equipmentId} not found.`,
+      );
+    }
   }
 }

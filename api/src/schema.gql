@@ -17,12 +17,18 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type DeleteEquipmentResponse {
+  success: Boolean!
+  message: String
+}
+
 type Query {
   equipment: [Equipment!]!
 }
 
 type Mutation {
   createEquipment(createEquipmentInput: CreateEquipmentInput!): Equipment!
+  removeEquipment(id: Int!): DeleteEquipmentResponse!
 }
 
 input CreateEquipmentInput {
