@@ -6,6 +6,10 @@ import { CreateEquipmentInput } from './dto/create-equipment.input';
 export class EquipmentService {
   constructor(private prisma: PrismaService) {}
 
+  async findAll() {
+    return await this.prisma.equipment.findMany();
+  }
+
   async create(createEquipmentInput: CreateEquipmentInput) {
     return this.prisma.equipment.create({
       data: createEquipmentInput,

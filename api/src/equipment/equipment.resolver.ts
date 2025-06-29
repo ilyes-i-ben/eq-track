@@ -8,8 +8,8 @@ export class EquipmentResolver {
   constructor(private readonly equipmentService: EquipmentService) {}
 
   @Query(() => [Equipment], { name: 'equipment' })
-  findAll() {
-    return [];
+  async findAll() {
+    return await this.equipmentService.findAll();
   }
 
   @Mutation(() => Equipment)
