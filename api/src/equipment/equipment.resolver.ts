@@ -22,16 +22,17 @@ export class EquipmentResolver {
   }
 
   @Mutation(() => DeleteEquipmentResponse)
-  async removeEquipment(@Args('id', { type: () => Int }) id: number) {
+  async removeEquipment(
+    @Args('id', { type: () => Int }) id: number,
+    @Args('soft', { type: () => Boolean }) soft: boolean,
+  ) {
     try {
-      await this.equipmentService.delete(id);
+      await this.equipmentService.delete(id, soft);
     } catch (error: any) {
       return {
         success: false,
         message:
-          error instanceof NotFoundException
-            ? error.message
-            : 'An unknown error occurred',
+          error instanceof NotFoundException ? error.message : 'error occured',
       };
     }
     return {

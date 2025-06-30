@@ -28,7 +28,7 @@ type Query {
 
 type Mutation {
   createEquipment(createEquipmentInput: CreateEquipmentInput!): Equipment!
-  removeEquipment(id: Int!): DeleteEquipmentResponse!
+  removeEquipment(id: Int!, soft: Boolean!): DeleteEquipmentResponse!
 }
 
 input CreateEquipmentInput {

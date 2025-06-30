@@ -20,6 +20,7 @@ model Equipment {
   model           String
   equipmentTypeId Int
   equipmentType   EquipmentType @relation(fields: [equipmentTypeId], references: [id])
+  isDeleted       Boolean       @default(false)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }

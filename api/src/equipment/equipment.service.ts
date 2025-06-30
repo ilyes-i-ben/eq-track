@@ -16,8 +16,12 @@ export class EquipmentService {
     });
   }
 
-  async delete(equipmentId: number) {
+  async delete(equipmentId: number, soft: boolean = false) {
+    // todo: move the "try catch" to resolver instead
     try {
+      if (soft) {
+        return await this.softDelete(equipmentId);
+      }
       return await this.prisma.equipment.delete({
         where: {
           id: equipmentId,
@@ -28,5 +32,16 @@ export class EquipmentService {
         `Equipment with id : ${equipmentId} not found.`,
       );
     }
+  }
+
+  private async softDelete(equipmentId: number) {
+    return await this.prisma.equipment.update({
+      where: {
+        id: equipmentId,
+      },
+      data: {
+        isDeleted: true,
+      },
+    });
   }
 }
