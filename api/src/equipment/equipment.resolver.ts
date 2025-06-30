@@ -3,6 +3,7 @@ import { EquipmentService } from './equipment.service';
 import { Equipment } from './entities/equipment.entity';
 import { CreateEquipmentInput } from './dto/create-equipment.input';
 import { DeleteEquipmentResponse } from './dto/delete-equipment.response';
+import { NotFoundException } from '@nestjs/common';
 
 @Resolver(() => Equipment)
 export class EquipmentResolver {
@@ -22,7 +23,17 @@ export class EquipmentResolver {
 
   @Mutation(() => DeleteEquipmentResponse)
   async removeEquipment(@Args('id', { type: () => Int }) id: number) {
-    await this.equipmentService.delete(id);
+    try {
+      await this.equipmentService.delete(id);
+    } catch (error: any) {
+      return {
+        success: false,
+        message:
+          error instanceof NotFoundException
+            ? error.message
+            : 'An unknown error occurred',
+      };
+    }
     return {
       success: true,
       message: 'Equipment deleted successfully',
