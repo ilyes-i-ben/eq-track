@@ -22,17 +22,19 @@ services:
     depends_on:
       - db
 
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   env_file:
-  #     - ./frontend/.env
-  #   depends_on:
-  #     - api
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+      - "3001:3000"
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - api
 
   # TODO: add a wait-for-it script for connection refused problem...
   pgweb:
