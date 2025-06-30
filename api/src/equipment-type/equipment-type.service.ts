@@ -14,4 +14,14 @@ export class EquipmentTypeService {
       },
     });
   }
+
+  async findOneEquipmentType(id: number) {
+    return await this.prisma.equipmentType.findUnique({
+      where: { id },
+      include: {
+        parent: true,
+        children: true,
+      },
+    });
+  }
 }

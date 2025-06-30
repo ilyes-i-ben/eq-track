@@ -33,7 +33,9 @@ type DeleteEquipmentResponse {
 
 type Query {
   equipments: [Equipment!]!
+  findEquipment(id: Int!): Equipment!
   equipmentTypes: [EquipmentType!]!
+  findEquipmentType(id: Int!): EquipmentType!
 }
 
 type Mutation {

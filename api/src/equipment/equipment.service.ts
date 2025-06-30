@@ -15,6 +15,22 @@ export class EquipmentService {
     });
   }
 
+  async findOneEquipment(id: number) {
+    return await this.prisma.equipment.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        equipmentType: {
+          include: {
+            children: true,
+            parent: true,
+          },
+        },
+      },
+    });
+  }
+
   async create(createEquipmentInput: CreateEquipmentInput) {
     return await this.prisma.equipment.create({
       data: createEquipmentInput,

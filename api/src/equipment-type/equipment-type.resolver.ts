@@ -1,4 +1,4 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Query, Resolver } from '@nestjs/graphql';
 import { EquipmentType } from './entities/equipment-type.entity';
 import { EquipmentTypeService } from './equipment-type.service';
 
@@ -9,5 +9,10 @@ export class EquipmentTypeResolver {
   @Query(() => [EquipmentType], { name: 'equipmentTypes' })
   async findAll() {
     return await this.equipmentTypeService.findAll();
+  }
+
+  @Query(() => EquipmentType, { name: 'findEquipmentType' })
+  async findOneEquipmentType(@Args('id', { type: () => Int }) id: number) {
+    return await this.equipmentTypeService.findOneEquipmentType(id);
   }
 }

@@ -15,6 +15,11 @@ export class EquipmentResolver {
     return await this.equipmentService.findAll();
   }
 
+  @Query(() => Equipment, { name: 'findEquipment' })
+  async findEquipment(@Args('id', { type: () => Int }) id: number) {
+    return await this.equipmentService.findOneEquipment(id);
+  }
+
   @Mutation(() => Equipment)
   async createEquipment(
     @Args('createEquipmentInput') createEquipmentInput: CreateEquipmentInput,
