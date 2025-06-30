@@ -2,12 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type EquipmentType {
+  id: ID!
+  name: String!
+  parentId: Int
+  parent: EquipmentType
+  children: [EquipmentType!]!
+}
+
 type Equipment {
   id: ID!
   name: String!
   brand: String!
   model: String!
   equipmentTypeId: Int!
+  equipmentType: EquipmentType!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -23,7 +32,8 @@ type DeleteEquipmentResponse {
 }
 
 type Query {
-  equipment: [Equipment!]!
+  equipments: [Equipment!]!
+  equipmentTypes: [EquipmentType!]!
 }
 
 type Mutation {

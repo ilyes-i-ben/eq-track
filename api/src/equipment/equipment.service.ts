@@ -8,12 +8,19 @@ export class EquipmentService {
   constructor(private prisma: PrismaService) {}
 
   async findAll() {
-    return await this.prisma.equipment.findMany();
+    return await this.prisma.equipment.findMany({
+      include: {
+        equipmentType: true,
+      },
+    });
   }
 
   async create(createEquipmentInput: CreateEquipmentInput) {
     return await this.prisma.equipment.create({
       data: createEquipmentInput,
+      include: {
+        equipmentType: true,
+      },
     });
   }
 
@@ -21,6 +28,9 @@ export class EquipmentService {
     return await this.prisma.equipment.update({
       where: { id },
       data,
+      include: {
+        equipmentType: true,
+      },
     });
   }
 

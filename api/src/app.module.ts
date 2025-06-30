@@ -6,7 +6,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { PrismaModule } from './prisma/prisma.module';
 import { EquipmentModule } from './equipment/equipment.module';
-import { EquipmentTypeService } from './equipment-type/equipment-type.service';
 import { EquipmentTypeModule } from './equipment-type/equipment-type.module';
 
 @Module({
@@ -20,6 +19,6 @@ import { EquipmentTypeModule } from './equipment-type/equipment-type.module';
     EquipmentTypeModule,
   ],
   controllers: [AppController],
-  providers: [AppService, EquipmentTypeService],
+  providers: [AppService],
 })
 export class AppModule {}

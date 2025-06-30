@@ -10,8 +10,8 @@ import { UpdateEquipmentInput } from './dto/update-equipment.input';
 export class EquipmentResolver {
   constructor(private readonly equipmentService: EquipmentService) {}
 
-  @Query(() => [Equipment], { name: 'equipment' })
-  async findAll() {
+  @Query(() => [Equipment], { name: 'equipments' })
+  async findAllEquipments() {
     return await this.equipmentService.findAll();
   }
 

@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { EquipmentType } from 'src/equipment-type/entities/equipment-type.entity';
 
 @ObjectType()
 export class Equipment {
@@ -17,7 +18,8 @@ export class Equipment {
   @Field(() => Int)
   equipmentTypeId: number;
 
-  // Note: We will add the full EquipmentType object relation in a later step!
+  @Field(() => EquipmentType)
+  equipmentType: EquipmentType;
 
   @Field()
   createdAt: Date;
