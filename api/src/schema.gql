@@ -28,6 +28,7 @@ type Query {
 
 type Mutation {
   createEquipment(createEquipmentInput: CreateEquipmentInput!): Equipment!
+  updateEquipment(updateEquipmentInput: UpdateEquipmentInput!): Equipment!
   removeEquipment(id: Int!, soft: Boolean!): DeleteEquipmentResponse!
 }
 
@@ -36,4 +37,12 @@ input CreateEquipmentInput {
   brand: String!
   model: String!
   equipmentTypeId: Int!
+}
+
+input UpdateEquipmentInput {
+  name: String
+  brand: String
+  model: String
+  equipmentTypeId: Int
+  id: Int!
 }

@@ -4,6 +4,7 @@ import { Equipment } from './entities/equipment.entity';
 import { CreateEquipmentInput } from './dto/create-equipment.input';
 import { DeleteEquipmentResponse } from './dto/delete-equipment.response';
 import { NotFoundException } from '@nestjs/common';
+import { UpdateEquipmentInput } from './dto/update-equipment.input';
 
 @Resolver(() => Equipment)
 export class EquipmentResolver {
@@ -19,6 +20,13 @@ export class EquipmentResolver {
     @Args('createEquipmentInput') createEquipmentInput: CreateEquipmentInput,
   ) {
     return await this.equipmentService.create(createEquipmentInput);
+  }
+
+  @Mutation(() => Equipment)
+  async updateEquipment(
+    @Args('updateEquipmentInput') updateEquipmentInput: UpdateEquipmentInput,
+  ) {
+    return await this.equipmentService.update(updateEquipmentInput);
   }
 
   @Mutation(() => DeleteEquipmentResponse)
