@@ -1,11 +1,9 @@
-import React from "react";
-
 export interface EquipmentSearchProps {
     value: string;
     onChange: (value: string) => void;
 }
 
-const EquipmentSearch: React.FC<EquipmentSearchProps> = ({ value, onChange }) => {
+const EquipmentSearch = ({ value, onChange }: EquipmentSearchProps) => {
     return (
         <div className="mb-4">
             <input

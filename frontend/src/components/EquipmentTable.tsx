@@ -1,13 +1,15 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { ALL_EQUIPMENTS } from "../graphql/equipment";
+import { ALL_EQUIPMENTS } from "../graphql/equipments/find";
 import type { Equipment } from "../types/equipment";
 import EquipmentFilters from "./EquipmentFilters";
 import EquipmentSearch from "./EquipmentSearch";
 import { getTypeHierarchy } from "../utils";
+import { useArchiveWithDialog } from "../hooks/useArchiveWithDialog";
 
 function EquipmentTable() {
     const { data, loading, error } = useQuery(ALL_EQUIPMENTS);
+    const { handleArchive } = useArchiveWithDialog();
     const [filters, setFilters] = useState({
         domaine: "",
         type: "",
@@ -97,6 +99,12 @@ function EquipmentTable() {
                                 <td className="px-6 py-4">{eq.model}</td>
                                 <td className="flex items-center px-6 py-4">
                                     <button className="font-medium text-blue-600 hover:underline cursor-pointer">Modifier</button>
+                                    <button
+                                        className="font-medium text-yellow-600 hover:underline ms-3 cursor-pointer"
+                                        onClick={() => handleArchive(eq)}
+                                    >
+                                        Archiver
+                                    </button>
                                     <button className="font-medium text-red-600 hover:underline ms-3 cursor-pointer">Supprimer</button>
                                 </td>
                             </tr>

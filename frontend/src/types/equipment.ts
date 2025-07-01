@@ -16,3 +16,8 @@ export interface Equipment {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface DeleteEquipmentResponse {
+  success: boolean;
+  message?: string | null;
+}
