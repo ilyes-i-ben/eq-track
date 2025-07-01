@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const ALL_EQUIPMENTS = gql`
+export const ALL_EQUIPMENTS = gql`
 query allEquipments {
   equipments {
     id
@@ -27,4 +27,4 @@ query allEquipments {
     updatedAt
   }
 }
-`
+`;
