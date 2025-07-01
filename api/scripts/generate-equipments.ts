@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const EQUIPMENT_COUNT = 500;
 
 async function getLeafEquipmentTypes() {
-  return prisma.equipmentType.findMany({
+  return await prisma.equipmentType.findMany({
     where: {
       children: { none: {} },
       parent: {
@@ -29,12 +29,14 @@ async function main() {
   }
 
   const equipments = Array.from({ length: EQUIPMENT_COUNT }).map(() => {
-    const type = faker.helpers.arrayElement(leafTypes);
+    const type = faker.helpers.arrayElement(
+      leafTypes,
+    ) as (typeof leafTypes)[number];
     return {
       name: faker.commerce.productName(),
       brand: faker.company.name(),
       model: faker.string.alphanumeric({ length: 8 }).toUpperCase(),
-      equipmentTypeId: type.id,
+      equipmentTypeId: type.id!,
     };
   });
 
