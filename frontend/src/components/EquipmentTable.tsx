@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { ALL_EQUIPMENTS } from "../graphql/equipment";
 import type { Equipment } from "../types/equipment";
 import EquipmentFilters from "./EquipmentFilters";
+import EquipmentSearch from "./EquipmentSearch";
 import { getTypeHierarchy } from "../utils";
 
 function EquipmentTable() {
@@ -13,6 +14,7 @@ function EquipmentTable() {
         categorie: "",
         sousCategorie: "",
     });
+    const [search, setSearch] = useState("");
 
     const options = useMemo(() => {
         if (!data?.equipments) return { domaines: [], types: [], categories: [], sousCategories: [] };
@@ -39,20 +41,25 @@ function EquipmentTable() {
         if (!data?.equipments) return [];
         return data.equipments.filter((eq: Equipment) => {
             const [domaine, type, categorie, sousCategorie] = getTypeHierarchy(eq.equipmentType);
-            return (
+            const matchesFilters =
                 (!filters.domaine || filters.domaine === domaine) &&
                 (!filters.type || filters.type === type) &&
                 (!filters.categorie || filters.categorie === categorie) &&
-                (!filters.sousCategorie || filters.sousCategorie === sousCategorie)
-            );
+                (!filters.sousCategorie || filters.sousCategorie === sousCategorie);
+            const matchesSearch =
+                !search ||
+                eq.brand.toLowerCase().includes(search.toLowerCase()) ||
+                eq.model.toLowerCase().includes(search.toLowerCase());
+            return matchesFilters && matchesSearch;
         });
-    }, [data, filters]);
+    }, [data, filters, search]);
 
     if (loading) return <div>chargement...</div>;
     if (error) return <div>erreur lors du chargement des équipements.</div>;
 
     return (
         <div className="overflow-x-auto">
+            <EquipmentSearch value={search} onChange={setSearch} />
             <EquipmentFilters
                 domaineOptions={options.domaines}
                 typeOptions={options.types}
