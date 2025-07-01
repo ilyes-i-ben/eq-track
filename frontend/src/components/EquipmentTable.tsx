@@ -58,7 +58,7 @@ function EquipmentTable() {
     if (error) return <div>erreur lors du chargement des équipements.</div>;
 
     return (
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <EquipmentSearch value={search} onChange={setSearch} />
             <EquipmentFilters
                 domaineOptions={options.domaines}
@@ -68,30 +68,37 @@ function EquipmentTable() {
                 filters={filters}
                 onChange={setFilters}
             />
-            <table className="min-w-full border border-gray-200">
-                <thead>
-                    <tr className="bg-gray-100">
-                        <th className="px-2 py-1 border">Nom</th>
-                        <th className="px-2 py-1 border">Domaine</th>
-                        <th className="px-2 py-1 border">Type</th>
-                        <th className="px-2 py-1 border">Catégorie</th>
-                        <th className="px-2 py-1 border">Sous-catégorie</th>
-                        <th className="px-2 py-1 border">Marque</th>
-                        <th className="px-2 py-1 border">Modèle</th>
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">Nom</th>
+                        <th scope="col" className="px-6 py-3">Domaine</th>
+                        <th scope="col" className="px-6 py-3">Type</th>
+                        <th scope="col" className="px-6 py-3">Catégorie</th>
+                        <th scope="col" className="px-6 py-3">Sous-catégorie</th>
+                        <th scope="col" className="px-6 py-3">Marque</th>
+                        <th scope="col" className="px-6 py-3">Modèle</th>
+                        <th scope="col" className="px-6 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredEquipments.map((eq: Equipment) => {
                         const [domaine, type, categorie, sousCategorie] = getTypeHierarchy(eq.equipmentType);
                         return (
-                            <tr key={eq.id} className="border-t">
-                                <td className="px-2 py-1 border">{eq.name}</td>
-                                <td className="px-2 py-1 border">{domaine}</td>
-                                <td className="px-2 py-1 border">{type}</td>
-                                <td className="px-2 py-1 border">{categorie}</td>
-                                <td className="px-2 py-1 border">{sousCategorie}</td>
-                                <td className="px-2 py-1 border">{eq.brand}</td>
-                                <td className="px-2 py-1 border">{eq.model}</td>
+                            <tr key={eq.id} className="bg-white border-b border-gray-200 hover:bg-gray-50">
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    {eq.name}
+                                </th>
+                                <td className="px-6 py-4">{domaine}</td>
+                                <td className="px-6 py-4">{type}</td>
+                                <td className="px-6 py-4">{categorie}</td>
+                                <td className="px-6 py-4">{sousCategorie}</td>
+                                <td className="px-6 py-4">{eq.brand}</td>
+                                <td className="px-6 py-4">{eq.model}</td>
+                                <td className="flex items-center px-6 py-4">
+                                    <button className="font-medium text-blue-600 hover:underline cursor-pointer">Modifier</button>
+                                    <button className="font-medium text-red-600 hover:underline ms-3 cursor-pointer">Supprimer</button>
+                                </td>
                             </tr>
                         );
                     })}
