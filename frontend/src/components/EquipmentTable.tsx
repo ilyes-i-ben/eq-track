@@ -6,10 +6,12 @@ import EquipmentFilters from "./EquipmentFilters";
 import EquipmentSearch from "./EquipmentSearch";
 import { getTypeHierarchy } from "../utils";
 import { useArchiveWithDialog } from "../hooks/useArchiveWithDialog";
+import { useDeleteWithDialog } from "../hooks/useDeleteWithDialog";
 
 function EquipmentTable() {
     const { data, loading, error } = useQuery(ALL_EQUIPMENTS);
     const { handleArchive } = useArchiveWithDialog();
+    const { handleDelete } = useDeleteWithDialog();
     const [filters, setFilters] = useState({
         domaine: "",
         type: "",
@@ -105,7 +107,12 @@ function EquipmentTable() {
                                     >
                                         Archiver
                                     </button>
-                                    <button className="font-medium text-red-600 hover:underline ms-3 cursor-pointer">Supprimer</button>
+                                    <button
+                                        className="font-medium text-red-600 hover:underline ms-3 cursor-pointer"
+                                        onClick={() => handleDelete(eq)}
+                                    >
+                                        Supprimer
+                                    </button>
                                 </td>
                             </tr>
                         );

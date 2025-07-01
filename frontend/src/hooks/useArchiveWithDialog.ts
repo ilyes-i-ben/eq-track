@@ -16,7 +16,7 @@ export function useArchiveWithDialog() {
       Swal.fire({
         icon: "success",
         title: "Archivé !",
-        text: response.message || "Équipement archivé avec succès.",
+        text: response.message || "équipement archivé.",
       });
     } else {
       Swal.fire({
