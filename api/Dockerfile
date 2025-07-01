@@ -7,7 +7,6 @@ WORKDIR /app
 
 COPY --chown=${UID}:${GID} package*.json ./
 
-RUN npm install -g @nestjs/cli
 RUN npm install
 
 COPY --chown=${UID}:${GID} . .

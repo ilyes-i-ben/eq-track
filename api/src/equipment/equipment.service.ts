@@ -10,21 +10,38 @@ export class EquipmentService {
   async findAll() {
     return await this.prisma.equipment.findMany({
       include: {
-        equipmentType: true,
+        equipmentType: {
+          include: {
+            parent: {
+              include: {
+                parent: {
+                  include: {
+                    parent: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
   }
 
   async findOneEquipment(id: number) {
     return await this.prisma.equipment.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
       include: {
         equipmentType: {
           include: {
-            children: true,
-            parent: true,
+            parent: {
+              include: {
+                parent: {
+                  include: {
+                    parent: true,
+                  },
+                },
+              },
+            },
           },
         },
       },
