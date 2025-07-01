@@ -16,5 +16,6 @@
       ]
     }
   },
-  "postCreateCommand": "npm install --prefix api"
+  "postCreateCommand": "npm install --prefix api",
+  "shutdownAction": "none"
 }
