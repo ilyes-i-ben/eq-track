@@ -2,9 +2,24 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const [inputValue, setInputValue] = useState('')
+
+  const showSwal = () => {
+    withReactContent(Swal).fire({
+      title: <i>Input something</i>,
+      input: 'text',
+      inputValue,
+      preConfirm: () => {
+        setInputValue(Swal.getInput()?.value || '')
+      },
+    })
+  }
 
   return (
     <>
@@ -24,6 +39,9 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+        <button onClick={showSwal}>
+          Open Modal
+        </button>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
