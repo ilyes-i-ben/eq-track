@@ -7,10 +7,17 @@ export class EquipmentTypeService {
 
   async findAll() {
     return await this.prisma.equipmentType.findMany({
-      take: 5,
       include: {
         children: true,
-        parent: true,
+        parent: {
+          include: {
+            parent: {
+              include: {
+                parent: true,
+              },
+            },
+          },
+        },
       },
     });
   }
