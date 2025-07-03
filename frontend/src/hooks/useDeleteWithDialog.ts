@@ -1,5 +1,4 @@
-import { useMutation } from "@apollo/client";
-import { REMOVE_EQUIPMENT } from "../graphql/equipments/delete";
+import {  useRemoveEquipment } from "../graphql/equipments/delete";
 import type { Equipment, DeleteEquipmentResponse } from "../types/equipment";
 
 async function confirmDelete(equipment: Equipment): Promise<boolean> {
@@ -18,7 +17,7 @@ async function confirmDelete(equipment: Equipment): Promise<boolean> {
 }
 
 export function useDeleteWithDialog() {
-  const [removeEquipment] = useMutation(REMOVE_EQUIPMENT);
+  const [removeEquipment] = useRemoveEquipment();
 
   const handleDelete = async (eq: Equipment) => {
     const confirmed = await confirmDelete(eq);

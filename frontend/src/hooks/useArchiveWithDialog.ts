@@ -1,10 +1,9 @@
-import { useMutation } from "@apollo/client";
-import { REMOVE_EQUIPMENT } from "../graphql/equipments/delete";
+import { useRemoveEquipment } from "../graphql/equipments/delete";
 import { confirmArchive } from "../utils/confirmArchive";
 import type { Equipment, DeleteEquipmentResponse } from "../types/equipment";
 
 export function useArchiveWithDialog() {
-  const [archiveEquipment] = useMutation(REMOVE_EQUIPMENT);
+  const [archiveEquipment] = useRemoveEquipment();
 
   const handleArchive = async (eq: Equipment) => {
     const confirmed = await confirmArchive(eq);

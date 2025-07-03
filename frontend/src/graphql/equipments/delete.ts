@@ -1,4 +1,5 @@
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+import { GET_EQUIPMENTS } from "./find";
 
 export const REMOVE_EQUIPMENT = gql`
   mutation RemoveEquipment($id: Int!, $soft: Boolean!) {
@@ -8,3 +9,7 @@ export const REMOVE_EQUIPMENT = gql`
     }
   }
 `;
+
+export const useRemoveEquipment = () => useMutation(REMOVE_EQUIPMENT, {
+  refetchQueries: [GET_EQUIPMENTS]
+})
