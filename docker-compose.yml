@@ -32,8 +32,6 @@ services:
       - ./frontend:/app
     depends_on:
       - api
-
-  # TODO: add a wait-for-it script for connection refused problem...
   pgweb:
     image: sosedoff/pgweb
     ports:
