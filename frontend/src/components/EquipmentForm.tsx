@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { CreateEquipmentInput, Equipment, EquipmentType } from "../types";
+import type { CreateEquipmentInput, Equipment } from "../types";
 import { EquipmentTypesDropdown, type EquipmentTypeOptions } from "./EquipmentTypesDropdown";
 interface EquipmentFormProps {
   equipmentTypes: EquipmentTypeOptions[];

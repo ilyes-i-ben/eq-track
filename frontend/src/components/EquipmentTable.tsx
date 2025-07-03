@@ -7,10 +7,12 @@ import { useDeleteWithDialog } from "../hooks/useDeleteWithDialog";
 import { useEquipmentFiltersAndSearch } from "../hooks/useEquipmentFiltersAndSearch";
 import { getTypeHierarchy } from "../utils";
 import type { Equipment } from "../types/equipment";
+import { useRestoreWithDialog } from "../hooks/useRestoreWithDialog";
 
 function EquipmentTable() {
     const { handleArchive } = useArchiveWithDialog();
     const { handleDelete } = useDeleteWithDialog();
+    const { handleRestore } = useRestoreWithDialog();
     const {
         loading,
         error,
@@ -68,8 +70,8 @@ function EquipmentTable() {
                             <tr
                                 key={eq.id}
                                 className={`border-b border-gray-200 ${eq.isDeleted
-                                        ? "bg-yellow-300"
-                                        : "bg-white hover:bg-gray-50"
+                                    ? "bg-yellow-300"
+                                    : "bg-white hover:bg-gray-50"
                                     }`}
                             >
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
@@ -88,12 +90,22 @@ function EquipmentTable() {
                                     >
                                         Modifier
                                     </button>
-                                    <button
-                                        className="font-medium text-yellow-600 hover:underline ms-3 cursor-pointer"
-                                        onClick={() => handleArchive(eq)}
-                                    >
-                                        Archiver
-                                    </button>
+                                    {
+                                        !eq.isDeleted ?
+                                            <button
+                                                className="font-medium text-yellow-600 hover:underline ms-3 cursor-pointer"
+                                                onClick={() => handleArchive(eq)}
+                                            >
+                                                Archiver
+                                            </button>
+                                            :
+                                            <button
+                                                className="font-medium text-yellow-600 hover:underline ms-3 cursor-pointer"
+                                                onClick={() => handleRestore(eq)}
+                                            >
+                                                Réstaurer
+                                            </button>
+                                    }
                                     <button
                                         className="font-medium text-red-600 hover:underline ms-3 cursor-pointer"
                                         onClick={() => handleDelete(eq)}
