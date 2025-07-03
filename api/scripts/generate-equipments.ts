@@ -3,7 +3,19 @@ import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
-const EQUIPMENT_COUNT = 500;
+const DEFAULT_EQUIPMENT_COUNT = 500;
+
+function parseCountArg(): number {
+  const countArg = process.argv.find((arg) => arg.startsWith('--count='));
+  if (countArg) {
+    const value = parseInt(countArg.split('=')[1], 10);
+    if (!isNaN(value) && value > 0) return value;
+    console.warn('invalid --count argument, using default...');
+  }
+  return DEFAULT_EQUIPMENT_COUNT;
+}
+
+const EQUIPMENT_COUNT = parseCountArg();
 
 async function getLeafEquipmentTypes() {
   return await prisma.equipmentType.findMany({
