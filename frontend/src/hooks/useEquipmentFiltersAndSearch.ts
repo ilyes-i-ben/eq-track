@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { ALL_EQUIPMENTS } from "../graphql/equipments/find";
+import { GET_EQUIPMENTS } from "../graphql/equipments/find";
 import type { Equipment } from "../types/equipment";
 import { getTypeHierarchy } from "../utils";
 
 export function useEquipmentFiltersAndSearch() {
-    const { data, loading, error, refetch } = useQuery(ALL_EQUIPMENTS);
+    const { data, loading, error, refetch } = useQuery(GET_EQUIPMENTS);
     const [filters, setFilters] = useState({
         domaine: "",
         type: "",

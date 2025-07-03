@@ -21,3 +21,10 @@ export interface DeleteEquipmentResponse {
   success: boolean;
   message?: string | null;
 }
+
+export interface CreateEquipmentInput {
+  name: string;
+  brand: string;
+  model: string;
+  equipmentTypeId: number;
+}

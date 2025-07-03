@@ -1,5 +1,6 @@
 import './index.css'
 import EquipmentTable from "./components/EquipmentTable";
+import AddEquipmentButton from "./components/AddEquipmentButton";
 
 function App() {
   return (
@@ -8,6 +9,9 @@ function App() {
         <h1 className="text-2xl font-bold tracking-tight">Equipment Management</h1>
       </header>
       <main className="w-full max-w-full p-4 bg-white rounded shadow-sm">
+        <div className="mb-6 flex justify-end">
+          <AddEquipmentButton />
+        </div>
         {/* Placeholder for future: creation/edit form, confirmation dialog, etc. */}
         <section className="mb-8">
           <EquipmentTable />
