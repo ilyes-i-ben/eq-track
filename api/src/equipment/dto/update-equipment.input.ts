@@ -5,4 +5,7 @@ import { CreateEquipmentInput } from './create-equipment.input';
 export class UpdateEquipmentInput extends PartialType(CreateEquipmentInput) {
   @Field(() => Int)
   id: number;
+
+  @Field()
+  isDeleted: boolean;
 }

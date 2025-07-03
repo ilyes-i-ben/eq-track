@@ -67,4 +67,5 @@ input UpdateEquipmentInput {
   model: String
   equipmentTypeId: Int
   id: Int!
+  isDeleted: Boolean!
 }
