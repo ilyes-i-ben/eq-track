@@ -31,15 +31,11 @@ type DeleteEquipmentResponse {
   message: String
 }
 
-type EquipmentTypeDropdownPath {
+type EquipmentTypeTree {
   id: Int!
   label: String!
-}
-
-type EquipmentTypeDropdown {
-  id: Int!
-  label: String!
-  path: [EquipmentTypeDropdownPath!]!
+  selectable: Boolean!
+  children: [EquipmentTypeTree!]
 }
 
 type Query {
@@ -48,7 +44,7 @@ type Query {
   equipmentTypes: [EquipmentType!]!
   findEquipmentType(id: Int!): EquipmentType!
   findEndTypes: [EquipmentType!]!
-  equipmentTypeDropdown: [EquipmentTypeDropdown!]!
+  equipmentTypeTree: [EquipmentTypeTree!]!
 }
 
 type Mutation {

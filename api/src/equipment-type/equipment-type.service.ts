@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { EquipmentTypeForDropdown } from './types/equipment-type-for-dropdown';
+import { EquipmentTypeTreeNode } from './types/equipment-type-tree-node';
+import { EquipmentTypeTreeTransformer } from './equipment-type-tree.transformer';
 
 @Injectable()
 export class EquipmentTypeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly treeTransformer: EquipmentTypeTreeTransformer,
+  ) {}
 
   async findAll() {
     return await this.prisma.equipmentType.findMany({
@@ -63,21 +67,12 @@ export class EquipmentTypeService {
     });
   }
 
-  async findEndTypesDropdown() {
-    const leaves = (await this.findEndTypes()) as EquipmentTypeForDropdown[];
-
-    return leaves.map((leaf) => {
-      const path = [];
-      let current: EquipmentTypeForDropdown | null = leaf;
-      while (current) {
-        path.unshift({ id: current.id, label: current.name } as never);
-        current = current.parent;
-      }
-      return {
-        id: leaf.id,
-        label: leaf.name,
-        path,
-      };
+  async findEquipmentTypeTree(): Promise<EquipmentTypeTreeNode[]> {
+    const endTypes = await this.findEndTypes();
+    const allEquipmentTypes = await this.prisma.equipmentType.findMany({
+      orderBy: [{ parentId: 'asc' }, { name: 'asc' }],
     });
+
+    return this.treeTransformer.transformToTree(allEquipmentTypes, endTypes);
   }
 }

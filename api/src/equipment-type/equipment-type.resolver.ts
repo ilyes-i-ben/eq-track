@@ -1,7 +1,7 @@
 import { Args, Int, Query, Resolver } from '@nestjs/graphql';
 import { EquipmentType } from './entities/equipment-type.entity';
 import { EquipmentTypeService } from './equipment-type.service';
-import { EquipmentTypeDropdown } from './dto/equipment-type-dropdown.response';
+import { EquipmentTypeTree } from './dto/equipment-type-tree.response';
 
 @Resolver(() => EquipmentType)
 export class EquipmentTypeResolver {
@@ -22,8 +22,8 @@ export class EquipmentTypeResolver {
     return this.equipmentTypeService.findEndTypes();
   }
 
-  @Query(() => [EquipmentTypeDropdown], { name: 'equipmentTypeDropdown' })
-  async equipmentTypeDropdown() {
-    return this.equipmentTypeService.findEndTypesDropdown();
+  @Query(() => [EquipmentTypeTree], { name: 'equipmentTypeTree' })
+  async equipmentTypeTree() {
+    return this.equipmentTypeService.findEquipmentTypeTree();
   }
 }
