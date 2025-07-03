@@ -26,6 +26,7 @@ function EquipmentTable() {
 
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
+    const [showArchived, setShowArchived] = useState(true);
 
     const openEditModal = (equipment: Equipment) => {
         setSelectedEquipment(equipment);
@@ -39,6 +40,10 @@ function EquipmentTable() {
     if (loading) return <div>chargement...</div>;
     if (error) return <div>erreur lors du chargement des équipements.</div>;
 
+    const displayedEquipments = showArchived
+        ? filteredEquipments
+        : filteredEquipments.filter((eq: Equipment) => !eq.isDeleted);
+
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <EquipmentSearch value={search} onChange={setSearch} />
@@ -49,6 +54,8 @@ function EquipmentTable() {
                 sousCategorieOptions={options.sousCategories}
                 filters={filters}
                 onChange={setFilters}
+                showArchived={showArchived}
+                onToggleShowArchived={setShowArchived}
             />
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -64,7 +71,7 @@ function EquipmentTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredEquipments.map((eq: Equipment) => {
+                    {displayedEquipments.map((eq: Equipment) => {
                         const [domaine, type, categorie, sousCategorie] = getTypeHierarchy(eq.equipmentType);
                         return (
                             <tr
