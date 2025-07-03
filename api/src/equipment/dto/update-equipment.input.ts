@@ -6,6 +6,6 @@ export class UpdateEquipmentInput extends PartialType(CreateEquipmentInput) {
   @Field(() => Int)
   id: number;
 
-  @Field()
-  isDeleted: boolean;
+  @Field(() => Boolean, { nullable: true })
+  isDeleted?: boolean;
 }
