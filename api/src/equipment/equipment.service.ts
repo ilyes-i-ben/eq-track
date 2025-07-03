@@ -24,6 +24,7 @@ export class EquipmentService {
           },
         },
       },
+      orderBy: { updatedAt: 'desc' },
     });
   }
 

@@ -17,6 +17,7 @@ type Equipment {
   model: String!
   equipmentTypeId: Int!
   equipmentType: EquipmentType!
+  isDeleted: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }

@@ -22,6 +22,9 @@ export class Equipment {
   equipmentType: EquipmentType;
 
   @Field()
+  isDeleted?: boolean;
+
+  @Field()
   createdAt: Date;
 
   @Field()
