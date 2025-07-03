@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useMutation } from "@apollo/client";
 import Modal from "./Modal";
 import EquipmentForm from "./EquipmentForm";
 import type { Equipment, CreateEquipmentInput } from "../types/equipment";
-import { UPDATE_EQUIPMENT } from "../graphql/equipments/update";
-import { GET_EQUIPMENTS } from "../graphql/equipments/find";
+import { useUpdateEquipment } from "../graphql/equipments/update";
 import { useTypesDropdown } from "../graphql/equipmentTypes/dropdown";
 
 interface EditEquipmentModalProps {
@@ -15,9 +13,7 @@ interface EditEquipmentModalProps {
 
 const EditEquipmentModal = ({ isOpen, onClose, equipment }: EditEquipmentModalProps) => {
     const { data: equipmentTypeData, loading: loadingTypes } = useTypesDropdown();
-    const [updateEquipment, { loading }] = useMutation(UPDATE_EQUIPMENT, {
-        refetchQueries: [{ query: GET_EQUIPMENTS }],
-    });
+    const [updateEquipment, { loading }] = useUpdateEquipment();
     const [error, setError] = useState<string | null>(null);
 
     if (!equipment) return null;
@@ -26,7 +22,7 @@ const EditEquipmentModal = ({ isOpen, onClose, equipment }: EditEquipmentModalPr
         setError(null);
         try {
             await updateEquipment({
-                variables: { id: Number(equipment.id), input },
+                variables: { input: { ...input, id: Number(equipment.id) } },
             });
             onClose();
         } catch (e: any) {

@@ -1,8 +1,9 @@
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
+import { GET_EQUIPMENTS } from "./find";
 
 export const UPDATE_EQUIPMENT = gql`
-  mutation UpdateEquipment($id: Int!, $input: CreateEquipmentInput!) {
-    updateEquipment(id: $id, input: $input) {
+  mutation UpdateEquipment($input: UpdateEquipmentInput!) {
+    updateEquipment(updateEquipmentInput: $input) {
       id
       name
       brand
@@ -14,3 +15,7 @@ export const UPDATE_EQUIPMENT = gql`
     }
   }
 `;
+
+export const useUpdateEquipment = () => useMutation(UPDATE_EQUIPMENT, {
+    refetchQueries: [{ query: GET_EQUIPMENTS }],
+});
