@@ -1,11 +1,12 @@
 import { useState } from "react";
-import type { CreateEquipmentInput, EquipmentType } from "../types";
+import type { CreateEquipmentInput, Equipment, EquipmentType } from "../types";
 import { EquipmentTypesDropdown, type EquipmentTypeOptions } from "./EquipmentTypesDropdown";
 interface EquipmentFormProps {
   equipmentTypes: EquipmentTypeOptions[];
   onSubmit: (data: CreateEquipmentInput) => void;
   onCancel?: () => void;
   loading?: boolean;
+  initialValues?: Partial<Equipment>;
 }
 
 const initialState: CreateEquipmentInput = {
@@ -15,8 +16,8 @@ const initialState: CreateEquipmentInput = {
   equipmentTypeId: 0,
 };
 
-const EquipmentForm = ({ equipmentTypes, onSubmit, onCancel, loading }: EquipmentFormProps) => {
-  const [form, setForm] = useState<CreateEquipmentInput>(initialState);
+const EquipmentForm = ({ equipmentTypes, onSubmit, onCancel, loading, initialValues }: EquipmentFormProps) => {
+  const [form, setForm] = useState<CreateEquipmentInput>({ ...initialState, ...initialValues });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

@@ -12,11 +12,9 @@ function App() {
         <div className="mb-6 flex justify-end">
           <AddEquipmentButton />
         </div>
-        {/* Placeholder for future: creation/edit form, confirmation dialog, etc. */}
         <section className="mb-8">
           <EquipmentTable />
         </section>
-        {/* Future features/components will be added here */}
       </main>
     </div>
   )

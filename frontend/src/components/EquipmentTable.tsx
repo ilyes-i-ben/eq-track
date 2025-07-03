@@ -1,5 +1,7 @@
+import { useState } from "react";
 import EquipmentFilters from "./EquipmentFilters";
 import EquipmentSearch from "./EquipmentSearch";
+import EditEquipmentModal from "./EditEquipmentModal";
 import { useArchiveWithDialog } from "../hooks/useArchiveWithDialog";
 import { useDeleteWithDialog } from "../hooks/useDeleteWithDialog";
 import { useEquipmentFiltersAndSearch } from "../hooks/useEquipmentFiltersAndSearch";
@@ -19,6 +21,18 @@ function EquipmentTable() {
         options,
         filteredEquipments,
     } = useEquipmentFiltersAndSearch();
+
+    const [editModalOpen, setEditModalOpen] = useState(false);
+    const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
+
+    const openEditModal = (equipment: Equipment) => {
+        setSelectedEquipment(equipment);
+        setEditModalOpen(true);
+    };
+    const closeEditModal = () => {
+        setEditModalOpen(false);
+        setSelectedEquipment(null);
+    };
 
     if (loading) return <div>chargement...</div>;
     if (error) return <div>erreur lors du chargement des équipements.</div>;
@@ -62,7 +76,12 @@ function EquipmentTable() {
                                 <td className="px-6 py-4">{eq.brand}</td>
                                 <td className="px-6 py-4">{eq.model}</td>
                                 <td className="flex items-center px-6 py-4">
-                                    <button className="font-medium text-blue-600 hover:underline cursor-pointer">Modifier</button>
+                                    <button
+                                        className="font-medium text-blue-600 hover:underline cursor-pointer"
+                                        onClick={() => openEditModal(eq)}
+                                    >
+                                        Modifier
+                                    </button>
                                     <button
                                         className="font-medium text-yellow-600 hover:underline ms-3 cursor-pointer"
                                         onClick={() => handleArchive(eq)}
@@ -81,6 +100,11 @@ function EquipmentTable() {
                     })}
                 </tbody>
             </table>
+            <EditEquipmentModal
+                isOpen={editModalOpen}
+                onClose={closeEditModal}
+                equipment={selectedEquipment}
+            />
         </div>
     );
 }
