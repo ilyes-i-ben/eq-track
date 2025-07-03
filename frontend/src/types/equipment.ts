@@ -13,6 +13,7 @@ export interface Equipment {
   model: string;
   equipmentTypeId: number;
   equipmentType: EquipmentType;
+  isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
 }

@@ -65,7 +65,13 @@ function EquipmentTable() {
                     {filteredEquipments.map((eq: Equipment) => {
                         const [domaine, type, categorie, sousCategorie] = getTypeHierarchy(eq.equipmentType);
                         return (
-                            <tr key={eq.id} className="bg-white border-b border-gray-200 hover:bg-gray-50">
+                            <tr
+                                key={eq.id}
+                                className={`border-b border-gray-200 ${eq.isDeleted
+                                        ? "bg-yellow-300"
+                                        : "bg-white hover:bg-gray-50"
+                                    }`}
+                            >
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     {eq.name}
                                 </th>

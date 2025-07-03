@@ -23,6 +23,7 @@ query allEquipments {
         }
       }
     }
+    isDeleted
     createdAt
     updatedAt
   }
