@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import Modal from "./Modal";
 import EquipmentForm from "./EquipmentForm";
-import type { CreateEquipmentInput, EquipmentType } from "../types";
+import type { CreateEquipmentInput } from "../types";
 import { CREATE_EQUIPMENT } from "../graphql/equipments/create";
 import { GET_EQUIPMENTS } from "../graphql/equipments/find";
-import { GET_EQUIPMENT_TYPES } from "../graphql/equipmentTypes/find";
+import { useTypesDropdown } from "../graphql/equipmentTypes/dropdown";
 
 interface AddEquipmentModalProps {
     isOpen: boolean;
@@ -13,7 +13,8 @@ interface AddEquipmentModalProps {
 }
 
 const AddEquipmentModal = ({ isOpen, onClose }: AddEquipmentModalProps) => {
-    const { data, loading: loadingTypes } = useQuery(GET_EQUIPMENT_TYPES);
+    const { data: equipmentTypeData, loading: loadingTypes } = useTypesDropdown();
+    console.log('EquipmnetTeaohfouaenfo', equipmentTypeData)
     const [createEquipment, { loading }] = useMutation(CREATE_EQUIPMENT, {
         refetchQueries: [{ query: GET_EQUIPMENTS }],
     });
@@ -22,10 +23,13 @@ const AddEquipmentModal = ({ isOpen, onClose }: AddEquipmentModalProps) => {
     const handleSubmit = async (input: CreateEquipmentInput) => {
         setError(null);
         try {
-            await createEquipment({ variables: { createEquipmentInput: input } });
+            await createEquipment({
+                variables:
+                    { input }
+            });
             onClose();
         } catch (e: any) {
-            setError(e.message || "Erreur lors de l'ajout.");
+            setError(e.message || "erreur lors l'ajout.");
         }
     };
 
@@ -33,7 +37,7 @@ const AddEquipmentModal = ({ isOpen, onClose }: AddEquipmentModalProps) => {
         <Modal isOpen={isOpen} onClose={onClose} title="Ajouter un équipement">
             {error && <div className="mb-2 text-red-600 text-sm">{error}</div>}
             <EquipmentForm
-                equipmentTypes={data?.equipmentTypes as EquipmentType[] || []}
+                equipmentTypes={equipmentTypeData?.equipmentTypeTree}
                 onSubmit={handleSubmit}
                 onCancel={onClose}
                 loading={loading || loadingTypes}
