@@ -21,9 +21,9 @@ function EquipmentFilters({
   onChange,
 }: EquipmentFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-2 mb-4">
+    <div className="flex flex-wrap gap-2 mb-4 justify-center">
       <select
-        className="border rounded px-2 py-1"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
         value={filters.domaine}
         onChange={e => onChange({ ...filters, domaine: e.target.value })}
       >
@@ -33,7 +33,7 @@ function EquipmentFilters({
         ))}
       </select>
       <select
-        className="border rounded px-2 py-1"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
         value={filters.type}
         onChange={e => onChange({ ...filters, type: e.target.value })}
       >
@@ -43,7 +43,7 @@ function EquipmentFilters({
         ))}
       </select>
       <select
-        className="border rounded px-2 py-1"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
         value={filters.categorie}
         onChange={e => onChange({ ...filters, categorie: e.target.value })}
       >
@@ -53,7 +53,7 @@ function EquipmentFilters({
         ))}
       </select>
       <select
-        className="border rounded px-2 py-1"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
         value={filters.sousCategorie}
         onChange={e => onChange({ ...filters, sousCategorie: e.target.value })}
       >
