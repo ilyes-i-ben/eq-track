@@ -41,9 +41,9 @@ A full-stack equipment tracking app, built with a clean, modular architecture an
    docker compose up -d --build
    ```
 
-3. **Generate the Prisma client (inside the `api` container):**
+3. **run the migrations & generate the Prisma client (done by migrate dev) (inside the `api` container):**
    ```sh
-   docker exec -it <api_container_name> npx prisma generate
+   docker exec -it <api_container_name> npx prisma migrate dev
    ```
    Replace `<api_container_name>` with the actual container name (usually something like `eq-track-api-1`).
 
