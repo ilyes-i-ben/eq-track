@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
-import { GET_EQUIPMENTS } from "./find";
+import { usePaginationContext } from "../../context/PaginationContext";
+import { GET_PAGINATED_EQUIPMENTS } from "./findPaginated";
 
 export const UPDATE_EQUIPMENT = gql`
   mutation UpdateEquipment($input: UpdateEquipmentInput!) {
@@ -16,6 +17,14 @@ export const UPDATE_EQUIPMENT = gql`
   }
 `;
 
-export const useUpdateEquipment = () => useMutation(UPDATE_EQUIPMENT, {
-    refetchQueries: [{ query: GET_EQUIPMENTS }],
-});
+export const useUpdateEquipment = () => {
+  const { currentPage, pageSize } = usePaginationContext();
+  return useMutation(UPDATE_EQUIPMENT, {
+    refetchQueries: [
+      {
+        query: GET_PAGINATED_EQUIPMENTS,
+        variables: { pageInput: currentPage, pageSizeInput: pageSize },
+      },
+    ],
+  });
+};
