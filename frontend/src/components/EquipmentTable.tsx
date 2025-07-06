@@ -8,6 +8,7 @@ import { useEquipmentFiltersAndSearch } from "../hooks/useEquipmentFiltersAndSea
 import { getTypeHierarchy } from "../utils";
 import type { Equipment } from "../types/equipment";
 import { useRestoreWithDialog } from "../hooks/useRestoreWithDialog";
+import { Spinner } from "./Spinner";
 
 function EquipmentTable() {
     const { handleArchive } = useArchiveWithDialog();
@@ -37,7 +38,7 @@ function EquipmentTable() {
         setSelectedEquipment(null);
     };
 
-    if (loading) return <div>chargement...</div>;
+    if (loading) return <Spinner />;
     if (error) return <div>erreur lors du chargement des équipements.</div>;
 
     const displayedEquipments = showArchived
