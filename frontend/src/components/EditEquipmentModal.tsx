@@ -43,6 +43,7 @@ const EditEquipmentModal = ({ isOpen, onClose, equipment }: EditEquipmentModalPr
                 onCancel={onClose}
                 loading={loading || loadingTypes}
                 initialValues={{
+                    id: equipment.id,
                     name: equipment.name,
                     brand: equipment.brand,
                     model: equipment.model,

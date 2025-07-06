@@ -81,7 +81,7 @@ const EquipmentForm = ({ equipmentTypes, onSubmit, onCancel, loading, initialVal
           <button type="button" onClick={onCancel} className="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">Annuler</button>
         )}
         <button type="submit" disabled={loading} className="px-4 py-2 rounded bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
-          {loading ? "Ajout..." : "Ajouter"}
+          {initialValues?.id ? 'Modifier' : 'Ajouter'}
         </button>
       </div>
     </form>
