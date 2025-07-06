@@ -5,6 +5,7 @@ import { CreateEquipmentInput } from './dto/create-equipment.input';
 import { DeleteEquipmentResponse } from './dto/delete-equipment.response';
 import { NotFoundException } from '@nestjs/common';
 import { UpdateEquipmentInput } from './dto/update-equipment.input';
+import { PaginatedEquipment } from './dto/paginated-equipment.response';
 
 @Resolver(() => Equipment)
 export class EquipmentResolver {
@@ -13,6 +14,25 @@ export class EquipmentResolver {
   @Query(() => [Equipment], { name: 'equipments' })
   async findAllEquipments() {
     return await this.equipmentService.findAll();
+  }
+
+  @Query(() => PaginatedEquipment, { name: 'findPaginatedEquipments' })
+  async findPaginatedEquipments(
+    @Args('page', { type: () => Int }) page: number = 1,
+    @Args('pageSize', { type: () => Int }) pageSize: number = 100,
+  ) {
+    const { items, totalCount } = await this.equipmentService.findPaginated(
+      page,
+      pageSize,
+    );
+
+    return {
+      items,
+      totalCount,
+      totalPages: Math.ceil(Number(totalCount) / pageSize),
+      currentPage: page,
+      pageSize,
+    };
   }
 
   @Query(() => Equipment, { name: 'findEquipment' })

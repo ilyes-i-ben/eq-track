@@ -32,6 +32,14 @@ type DeleteEquipmentResponse {
   message: String
 }
 
+type PaginatedEquipment {
+  items: [Equipment!]!
+  totalCount: Int!
+  totalPages: Int!
+  currentPage: Int!
+  pageSize: Int!
+}
+
 type EquipmentTypeTree {
   id: Int!
   label: String!
@@ -41,6 +49,7 @@ type EquipmentTypeTree {
 
 type Query {
   equipments: [Equipment!]!
+  findPaginatedEquipments(page: Int!, pageSize: Int!): PaginatedEquipment!
   findEquipment(id: Int!): Equipment!
   equipmentTypes: [EquipmentType!]!
   findEquipmentType(id: Int!): EquipmentType!

@@ -28,6 +28,36 @@ export class EquipmentService {
     });
   }
 
+  async findPaginated(page: number, pageSize: number) {
+    const items = await this.prisma.equipment.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      include: {
+        equipmentType: {
+          include: {
+            parent: {
+              include: {
+                parent: {
+                  include: {
+                    parent: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
+
+    const totalCount = await this.prisma.equipment.count();
+
+    return {
+      items,
+      totalCount,
+    };
+  }
+
   async findOneEquipment(id: number) {
     return await this.prisma.equipment.findUnique({
       where: { id },
