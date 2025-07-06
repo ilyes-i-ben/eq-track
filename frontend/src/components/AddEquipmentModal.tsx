@@ -4,8 +4,9 @@ import Modal from "./Modal";
 import EquipmentForm from "./EquipmentForm";
 import type { CreateEquipmentInput } from "../types";
 import { CREATE_EQUIPMENT } from "../graphql/equipments/create";
-import { GET_EQUIPMENTS } from "../graphql/equipments/find";
+import { GET_PAGINATED_EQUIPMENTS } from "../graphql/equipments/findPaginated";
 import { useTypesDropdown } from "../graphql/equipmentTypes/dropdown";
+import { usePaginationContext } from "../context/PaginationContext";
 
 interface AddEquipmentModalProps {
     isOpen: boolean;
@@ -14,8 +15,14 @@ interface AddEquipmentModalProps {
 
 const AddEquipmentModal = ({ isOpen, onClose }: AddEquipmentModalProps) => {
     const { data: equipmentTypeData, loading: loadingTypes } = useTypesDropdown();
+    const { currentPage, pageSize } = usePaginationContext();
     const [createEquipment, { loading }] = useMutation(CREATE_EQUIPMENT, {
-        refetchQueries: [{ query: GET_EQUIPMENTS }],
+        refetchQueries: [
+            {
+                query: GET_PAGINATED_EQUIPMENTS,
+                variables: { pageInput: currentPage, pageSizeInput: pageSize },
+            },
+        ],
     });
     const [error, setError] = useState<string | null>(null);
 
@@ -23,8 +30,7 @@ const AddEquipmentModal = ({ isOpen, onClose }: AddEquipmentModalProps) => {
         setError(null);
         try {
             await createEquipment({
-                variables:
-                    { input }
+                variables: { input }
             });
             onClose();
         } catch (e: any) {
