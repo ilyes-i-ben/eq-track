@@ -5,6 +5,18 @@ import App from './App.tsx'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { LocalStorageWrapper, persistCache } from 'apollo3-cache-persist'
 
+// registring the service worker...
+window.addEventListener('load', () => {
+  navigator.serviceWorker.register('/sw.js').then(
+    (reg) => {
+      console.log('registered..', reg.scope);
+    },
+    (error) => {
+      console.error('error: ', error);
+    }
+  );
+});
+
 const API_URL = import.meta.env.VITE_API_URL as string
 
 const cache = new InMemoryCache();

@@ -6,7 +6,7 @@ export default defineConfig({
  base: "/",
  plugins: [react(), tailwindcss()],
  preview: {
-  port: 5173,
+  port: 4173,
   strictPort: true,
  },
  server: {
