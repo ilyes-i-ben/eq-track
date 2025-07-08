@@ -2,8 +2,8 @@ const CACHE_NAME = "eq-track-cache-v1";
 const ASSETS_TO_CACHE = [
     "/",
     "/index.html",
-    "/assets/index-Bt5qnjlm.css",
-    "/assets/index-26uJkKcV.js",
+    "/assets/index.css",
+    "/assets/index.js",
 ];
 
 self.addEventListener("install", (event) => {
