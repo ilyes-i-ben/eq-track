@@ -2,13 +2,15 @@ import './index.css'
 import EquipmentTablePaginated from "./components/EquipmentTablePaginated";
 import AddEquipmentButton from "./components/AddEquipmentButton";
 import { PaginationProvider } from "./context/PaginationContext";
+import { useOffline } from './hooks/useOffline';
 
 function App() {
+  const isOffline = useOffline();
   return (
     <PaginationProvider>
       <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col items-center py-8">
         <header className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight">Equipment Management</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Equipment Management {isOffline && 'Offline'}</h1>
         </header>
         <main className="w-full max-w-full p-4 bg-white rounded shadow-sm">
           <div className="mb-6 flex justify-end">
